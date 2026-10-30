@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Thư mục tài liệu nội bộ không đưa lên GitHub
+dự án/
+
