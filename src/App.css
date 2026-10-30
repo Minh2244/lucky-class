@@ -1,0 +1,212 @@
+/* App.css - Giao diện tối ưu Lớp Học May Mắn */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Bố cục 2 cột trên Desktop, tự co thành 1 cột trên Mobile/Tablet */
+.main-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Trên điện thoại / máy tính bảng: Đưa Sân Chơi lên trên cùng, Danh sách học sinh xuống dưới */
+  .game-area-column {
+    order: 1;
+  }
+
+  .student-sidebar-card {
+    order: 2;
+    height: auto !important;
+    max-height: 380px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .sticky-header {
+    padding: 0.5rem 3vw !important;
+    gap: 6px !important;
+  }
+
+  .zoom-controls {
+    display: none !important;
+  }
+
+  .top-game-toolbar {
+    padding: 0.65rem 0.75rem !important;
+    gap: 8px !important;
+  }
+
+  .toolbar-dropdown-wrapper {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .toolbar-dropdown-btn {
+    width: 100%;
+    justify-content: space-between !important;
+    padding: 9px 12px !important;
+    font-size: 0.86rem !important;
+  }
+
+  .game-selector-dropdown,
+  .import-selector-dropdown {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .arena-card:not(.arena-fullscreen) {
+    min-height: auto !important;
+    padding: 0.5rem !important;
+    border-radius: 16px !important;
+  }
+
+  .game-stage-box:not(.stage-fullscreen) {
+    height: 430px !important;
+    border-radius: 14px !important;
+  }
+
+  .game-hud-bar {
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .game-hud-bar button,
+  .game-hud-bar > div {
+    font-size: 0.72rem !important;
+  }
+
+  .gift-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)) !important;
+    gap: 14px 10px !important;
+    padding: 10px 4px !important;
+  }
+
+  .game-action-btn {
+    padding: 11px 22px !important;
+    font-size: 0.92rem !important;
+    max-width: 92vw;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Header luôn ghim cố định trên đầu để không bị cuộn mất */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border, #1e293b);
+  padding: 0.6rem 1.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Nút bóng đèn chuyển sáng/tối */
+.lightbulb-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.lightbulb-icon {
+  font-size: 1.15rem;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.lightbulb-btn:hover .lightbulb-icon {
+  transform: scale(1.2) rotate(-8deg);
+}
+
+/* Cụm thu phóng giao diện */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.zoom-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 3px 7px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border-radius: 4px;
+}
+
+.zoom-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Khung sân chơi căn giữa tuyệt đối */
+.arena-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hiệu ứng nổi bật cho dropdown trò chơi */
+.game-selector-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 1000;
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  width: 340px;
+  max-width: 90vw;
+  max-height: 400px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
