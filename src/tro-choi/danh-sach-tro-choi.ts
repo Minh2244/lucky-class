@@ -62,7 +62,7 @@ export const DANH_SACH_6_TRO_CHOI: ThongTinTroChoi[] = [
     id: 'dua-vit',
     ten: 'Đua Vịt Qua Sông',
     icon: '🦆🏁',
-    thoiLuong: '20 giây',
+    thoiLuong: '30 giây',
     moTa: 'Đàn vịt cao su đủ màu sắc có số đeo trên cánh bơi đua rượt đuổi dọc bờ sông và chạm mỏ qua vạch đích ca-rô nghiêng!',
     sanSang: true
   },
@@ -78,7 +78,7 @@ export const DANH_SACH_6_TRO_CHOI: ThongTinTroChoi[] = [
     id: 'chuyen-bom',
     ten: 'Bom Hẹn Giờ',
     icon: '💣⏱️',
-    thoiLuong: '20 giây',
+    thoiLuong: '30 giây',
     moTa: 'Vòng tròn học sinh nhìn từ trên cao truyền tay nhau quả bom hẹn giờ theo chiều kim đồng hồ cực kỳ hồi hộp!',
     sanSang: true
   }

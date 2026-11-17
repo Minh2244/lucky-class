@@ -52,8 +52,9 @@ interface ParkProp {
   tilt: number;
 }
 
-// Thời lượng ván chơi: 20 giây (20,000ms)
-const BOMB_RACE_DURATION_MS = 20000;
+// Thời lượng ván chơi: 30 giây (30,000ms)
+const BOMB_RACE_DURATION_MS = 30000;
+const FINAL_SURPRISE_WINDOW_MS = 5000;
 
 function doanGioiTinhNu(ten: string, idx: number): boolean {
   const lower = ten.toLowerCase();
@@ -126,9 +127,10 @@ export const ChuyenBom: React.FC<ChuyenBomProps> = ({
     animationFrameId: 0
   });
 
-  // Chọn tốc độ truyền cho đợt tiếp theo tùy theo giai đoạn (0-2.5s khởi động | 2.5-15s tăng tốc đi hết vòng | 15-20s chậm nhanh bất ngờ!)
+  // Chọn tốc độ truyền cho đợt tiếp theo tùy theo giai đoạn (0-2.5s khởi động | 2.5-25s tăng tốc đi hết vòng | 25-30s chậm nhanh bất ngờ!)
   const chonNhipTocDoMoi = (elapsedMs: number, totalStudents: number) => {
     const isCrowd = totalStudents > 16;
+    const midPhaseEndMs = BOMB_RACE_DURATION_MS - FINAL_SURPRISE_WINDOW_MS;
 
     if (elapsedMs < 2500) {
       // Khởi động 2.5s đầu: nhìn rõ người xuất phát và hướng truyền
@@ -138,12 +140,12 @@ export const ChuyenBom: React.FC<ChuyenBomProps> = ({
       };
     }
 
-    if (elapsedMs < 15000) {
-      // Đoạn giữa (2.5s -> 15.0s): Với lớp đông (30-100+ người), tự đẩy tốc độ cao giúp bom đi hết trọn 1.2 - 2 vòng tròn!
+    if (elapsedMs < midPhaseEndMs) {
+      // Đoạn giữa (2.5s -> 25.0s): Với lớp đông (30-100+ người), tự đẩy tốc độ cao giúp bom đi hết trọn 1.5 - 2 vòng tròn!
       if (isCrowd) {
-        // Mục tiêu đi ~ max(28, total * 1.25) người trong 12.5 giây
-        const targetStepsInMid = Math.max(28, totalStudents * 1.28);
-        const avgMidMs = 12500 / targetStepsInMid;
+        const midDurationMs = midPhaseEndMs - 2500;
+        const targetStepsInMid = Math.max(40, totalStudents * 1.6);
+        const avgMidMs = midDurationMs / targetStepsInMid;
         const fastMs = Math.max(75, Math.round(avgMidMs * 0.72));
         const mediumMs = Math.max(150, Math.round(avgMidMs * 1.45));
 
@@ -171,7 +173,7 @@ export const ChuyenBom: React.FC<ChuyenBomProps> = ({
       return { durationMs: 680 + Math.floor(Math.random() * 160), steps: 2 };
     }
 
-    // 5 GIÂY CUỐI (15.0s -> 20.0s): CHẬM - NHANH BẤT NGỜ KHÔNG AI ĐOÁN TRƯỚC ĐƯỢC!
+    // 5 GIÂY CUỐI (25.0s -> 30.0s): CHẬM - NHANH BẤT NGỜ KHÔNG AI ĐOÁN TRƯỚC ĐƯỢC!
     const randBuf = new Uint32Array(1);
     if (window.crypto && window.crypto.getRandomValues) {
       window.crypto.getRandomValues(randBuf);
@@ -714,10 +716,10 @@ export const ChuyenBom: React.FC<ChuyenBomProps> = ({
       const screenCx = w / 2;
       const screenCy = state.isLargeCircle ? h / 2 + 12 : 305;
 
-      let remainSecFloat = 20.0;
+      let remainSecFloat = BOMB_RACE_DURATION_MS / 1000;
 
       // ============================================================================
-      // 1. CẬP NHẬT TRUYỀN TAY THEO CHIỀU KIM ĐỒNG HỒ ↻ (20 GIÂY - 5S CUỐI CHẬM/NHANH BẤT NGỜ)
+      // 1. CẬP NHẬT TRUYỀN TAY THEO CHIỀU KIM ĐỒNG HỒ ↻ (30 GIÂY - 5S CUỐI CHẬM/NHANH BẤT NGỜ)
       // ============================================================================
       if (dangChoi && state.students.length > 0) {
         if (!state.daPhatNo) {
@@ -745,7 +747,8 @@ export const ChuyenBom: React.FC<ChuyenBomProps> = ({
             setNguoiDangCamBom(state.students[state.holderIdx]?.hs.ten || '');
 
             state.stepsRemainingInPace--;
-            const justEnteredFinal5s = elapsed >= 15000 && !state.enteredFinal5s;
+            const justEnteredFinal5s =
+              elapsed >= BOMB_RACE_DURATION_MS - FINAL_SURPRISE_WINDOW_MS && !state.enteredFinal5s;
             if (justEnteredFinal5s) {
               state.enteredFinal5s = true;
             }

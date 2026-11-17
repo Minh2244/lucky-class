@@ -58,8 +58,8 @@ interface ChuVit {
   isWinner: boolean;
 }
 
-// Thời lượng cuộc đua: 20 giây (20,000ms)
-const RACE_DURATION_MS = 20000;
+// Thời lượng cuộc đua: 30 giây (30,000ms)
+const RACE_DURATION_MS = 30000;
 const RIVER_TOP_Y = 106;
 
 export const DuaVit: React.FC<DuaVitProps> = ({
@@ -72,7 +72,7 @@ export const DuaVit: React.FC<DuaVitProps> = ({
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [nguoiDanDau, setNguoiDanDau] = useState<string>('');
-  const [dongHoDienTu, setDongHoDienTu] = useState<string>('00:20:00');
+  const [dongHoDienTu, setDongHoDienTu] = useState<string>('00:30:00');
 
   const onHoanThanhRef = useRef(onHoanThanh);
   useEffect(() => {
@@ -192,7 +192,7 @@ export const DuaVit: React.FC<DuaVitProps> = ({
     stateRef.current.winnerPauseTimer = 0;
     stateRef.current.winnerDuck = null;
     setNguoiDanDau('');
-    setDongHoDienTu('00:20:00');
+    setDongHoDienTu('00:30:00');
   }, [danhSach]);
 
   useEffect(() => {
@@ -521,7 +521,7 @@ export const DuaVit: React.FC<DuaVitProps> = ({
           // để các chú vịt liên tục bơi vượt mặt nhau ở vùng giữa màn hình và trải rộng đẹp mắt!
           if (now - lastPackShuffleTime > 2200) {
             lastPackShuffleTime = now;
-            const isFinal = progress > 0.78;
+            const isFinal = progress > 0.85;
             const newTargets = phanBoViTriGiuaManHinh(state.vits.length, isFinal);
             state.vits.forEach((v, idx) => {
               if (newTargets[idx] > v.screenX + 55) {
@@ -531,9 +531,9 @@ export const DuaVit: React.FC<DuaVitProps> = ({
             });
           }
 
-          // Vạch đích ca-rô nghiêng bắt đầu trôi từ mép phải (x = 1220) vào GIỮA MÀN HÌNH (x = 540) ở 3.2 giây cuối!
-          if (progress >= 0.84) {
-            const finishRatio = (progress - 0.84) / 0.16;
+          // Vạch đích ca-rô nghiêng bắt đầu trôi từ mép phải (x = 1180) vào GIỮA MÀN HÌNH (x = 500) ở 3.3 giây cuối!
+          if (progress >= 0.89) {
+            const finishRatio = (progress - 0.89) / 0.11;
             state.finishLineCenterX = 1180 - finishRatio * 680;
           } else {
             state.finishLineCenterX = 1450;
