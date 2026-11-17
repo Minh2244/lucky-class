@@ -34,7 +34,10 @@ import {
   BiLienHoan,
   DuaDongVat,
   CauCaTimTen,
-  PhongTenLua
+  PhongTenLua,
+  DuaVit,
+  MayGapThu,
+  ChuyenBom
 } from './tro-choi';
 
 // Các cửa sổ Modal
@@ -464,6 +467,7 @@ function App() {
       <header
         className="sticky-header"
         style={{
+          display: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? 'none' : undefined,
           background: isBright ? 'rgba(255, 255, 255, 0.94)' : 'rgba(15, 23, 42, 0.94)',
           borderBottomColor: theme.border
         }}
@@ -633,11 +637,11 @@ function App() {
       {/* VÙNG NỘI DUNG CHÍNH (ÁP DỤNG THU PHÓNG ZOOM SCALE) */}
       <main
         style={{
-          padding: '1rem 1.5vw',
+          padding: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? 0 : '1rem 1.5vw',
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          zoom: `${zoomScale}%`,
+          zoom: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? '100%' : `${zoomScale}%`,
           maxWidth: '100%',
           boxSizing: 'border-box'
         }}
@@ -652,11 +656,9 @@ function App() {
               padding: '1rem',
               borderRadius: '16px',
               border: `1px solid ${theme.border}`,
-              display: 'flex',
+              display: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? 'none' : 'flex',
               flexDirection: 'column',
               boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
-              height: 'calc(100vh - 90px)',
-              maxHeight: '780px',
               boxSizing: 'border-box'
             }}>
             {/* Header danh sách */}
@@ -744,7 +746,7 @@ function App() {
             )}
 
             {/* Danh sách học sinh cuộn dọc */}
-            <div style={{ flex: 1, overflowY: 'auto', paddingRight: '4px' }}>
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', paddingRight: '4px' }}>
               {danhSachHocSinh.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '2.5rem 1rem', color: theme.textSub, fontStyle: 'italic', fontSize: '0.82rem' }}>
                   Lớp này chưa có học sinh. Hãy bấm ô <b>"📥 Nạp Danh Sách"</b> ở trên để thêm nhé!
@@ -818,7 +820,7 @@ function App() {
                 padding: '0.75rem 1.2rem',
                 borderRadius: '16px',
                 border: `1px solid ${theme.border}`,
-                display: 'flex',
+                display: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? 'none' : 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 flexWrap: 'wrap',
@@ -881,7 +883,7 @@ function App() {
                       textTransform: 'uppercase',
                       borderBottom: `1px solid ${theme.border}`
                     }}>
-                      Chọn 1 trong 6 trò chơi bốc thăm:
+                      Chọn 1 trong 9 trò chơi bốc thăm:
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '6px' }}>
@@ -1216,16 +1218,16 @@ function App() {
                     inset: 0,
                     width: '100vw',
                     height: '100vh',
-                    zIndex: 950,
+                    zIndex: 5000,
                     background: '#050814',
-                    padding: '10px 16px',
+                    padding: '8px 12px',
                     borderRadius: 0,
                     border: 'none',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    overflowY: 'auto'
+                    overflow: 'hidden'
                   }
                   : {
                     background: theme.cardBg,
@@ -1316,6 +1318,45 @@ function App() {
                   onToggleFullscreen={toggleFullscreenGame}
                 />
               )}
+
+              {/* 7. Đua vịt qua sông */}
+              {troChoiId === 'dua-vit' && (
+                <DuaVit
+                  danhSach={danhSachHocSinh}
+                  dangChoi={dangChoi}
+                  mucTieuIndex={mucTieuIndex}
+                  onBatDauChoi={handleBatDauLuotChoi}
+                  onHoanThanh={handleHoanThanhTroChoi}
+                  isFullscreen={isFullscreenGame}
+                  onToggleFullscreen={toggleFullscreenGame}
+                />
+              )}
+
+              {/* 8. Máy gắp thú bông */}
+              {troChoiId === 'may-gap-thu' && (
+                <MayGapThu
+                  danhSach={danhSachHocSinh}
+                  dangChoi={dangChoi}
+                  mucTieuIndex={mucTieuIndex}
+                  onBatDauChoi={handleBatDauLuotChoi}
+                  onHoanThanh={handleHoanThanhTroChoi}
+                  isFullscreen={isFullscreenGame}
+                  onToggleFullscreen={toggleFullscreenGame}
+                />
+              )}
+
+              {/* 9. Truyền tay bom hẹn giờ */}
+              {troChoiId === 'chuyen-bom' && (
+                <ChuyenBom
+                  danhSach={danhSachHocSinh}
+                  dangChoi={dangChoi}
+                  mucTieuIndex={mucTieuIndex}
+                  onBatDauChoi={handleBatDauLuotChoi}
+                  onHoanThanh={handleHoanThanhTroChoi}
+                  isFullscreen={isFullscreenGame}
+                  onToggleFullscreen={toggleFullscreenGame}
+                />
+              )}
             </div>
 
           </div>
@@ -1325,6 +1366,7 @@ function App() {
 
       {/* FOOTER */}
       <footer style={{
+        display: isFullscreenGame && troChoiId !== 'vong-quay-may-man' ? 'none' : undefined,
         padding: '0.5rem 1.5vw',
         borderTop: `1px solid ${theme.border}`,
         textAlign: 'center',

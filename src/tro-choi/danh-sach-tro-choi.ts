@@ -54,8 +54,32 @@ export const DANH_SACH_6_TRO_CHOI: ThongTinTroChoi[] = [
     id: 'phong-ten-lua',
     ten: 'Phóng Tên Lửa',
     icon: '🚀',
-    thoiLuong: '45 giây',
+    thoiLuong: '25 giây',
     moTa: 'Đếm ngược 3-2-1 cất cánh xuyên qua tầng mây lên vũ trụ, vượt thiên thạch và cắm cờ chiến thắng trên Mặt Trăng!',
+    sanSang: true
+  },
+  {
+    id: 'dua-vit',
+    ten: 'Đua Vịt Qua Sông',
+    icon: '🦆🏁',
+    thoiLuong: '20 giây',
+    moTa: 'Đàn vịt cao su đủ màu sắc có số đeo trên cánh bơi đua rượt đuổi dọc bờ sông và chạm mỏ qua vạch đích ca-rô nghiêng!',
+    sanSang: true
+  },
+  {
+    id: 'may-gap-thu',
+    ten: 'Máy Gắp Thú Bông',
+    icon: '🕹️🧸',
+    thoiLuong: 'Tối đa 25 giây',
+    moTa: 'Tủ máy gắp thú bông Kawaii Hồng-Xanh Neon: Sau 5 giây càng gắp bắt đầu gắp ngẫu nhiên hên xui (có thể trúng sớm hoặc tuột càng gắp lại trong tối đa 25 giây)!',
+    sanSang: true
+  },
+  {
+    id: 'chuyen-bom',
+    ten: 'Bom Hẹn Giờ',
+    icon: '💣⏱️',
+    thoiLuong: '20 giây',
+    moTa: 'Vòng tròn học sinh nhìn từ trên cao truyền tay nhau quả bom hẹn giờ theo chiều kim đồng hồ cực kỳ hồi hộp!',
     sanSang: true
   }
 ];

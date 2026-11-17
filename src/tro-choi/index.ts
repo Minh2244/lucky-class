@@ -5,4 +5,7 @@ export { DuaDongVat } from './dua-dong-vat';
 export { HopBiAn } from './hop-bi-an';
 export { CauCaTimTen } from './cau-ca-tim-ten';
 export { PhongTenLua } from './phong-ten-lua';
+export { DuaVit } from './dua-vit';
+export { MayGapThu } from './may-gap-thu';
+export { ChuyenBom } from './chuyen-bom';
 export { DANH_SACH_6_TRO_CHOI, DANH_SACH_9_TRO_CHOI } from './danh-sach-tro-choi';

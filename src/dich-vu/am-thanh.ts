@@ -149,6 +149,152 @@ class TrinhQuanLyAmThanh {
     }
   }
 
+  // Tiếng vịt kêu "Cạp! Cạp!" vui nhộn cho trò Đua Vịt
+  public phatTiengVitKeu() {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const filter = ctx.createBiquadFilter();
+      const gain = ctx.createGain();
+
+      osc.type = 'sawtooth';
+      const baseFreq = 310 + Math.random() * 65;
+      osc.frequency.setValueAtTime(baseFreq, now);
+      osc.frequency.linearRampToValueAtTime(baseFreq * 1.42, now + 0.045);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.78, now + 0.14);
+
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(950, now);
+      filter.Q.setValueAtTime(3.2, now);
+
+      gain.gain.setValueAtTime(0.01, now);
+      gain.gain.linearRampToValueAtTime(0.22, now + 0.025);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.14);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } catch {
+      // Fallback
+    }
+  }
+
+  // Tiếng mô-tơ càng gắp thú bông
+  public phatTiengCangGap() {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(240, now);
+      osc.frequency.linearRampToValueAtTime(420, now + 0.14);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.16);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.16);
+    } catch {
+      // Fallback
+    }
+  }
+
+  // Tiếng tuột càng rơi thú bông ("Ối!")
+  public phatTiengTuotCang() {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(480, now);
+      osc.frequency.exponentialRampToValueAtTime(160, now + 0.28);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.30);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.30);
+    } catch {
+      // Fallback
+    }
+  }
+
+  // Tiếng đập nứt vỏ trứng rồng & sấm sét
+  public phatTiengNutTrung() {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(520, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.18);
+      gain.gain.setValueAtTime(0.22, now);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.20);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.20);
+    } catch {
+      // Fallback
+    }
+  }
+
+  // Tiếng tích tắc đồng hồ bom hẹn giờ (tăng cao độ khi sắp nổ)
+  public phatTiengBomTick(khanCap: boolean = false) {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      const freq = khanCap ? 980 : 680;
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.5, now + 0.05);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.06);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.06);
+    } catch {
+      // Fallback
+    }
+  }
+
+  // Tiếng nổ "BÙM!" vui nhộn khi bom hẹn giờ hết giờ
+  public phatTiengBomNo() {
+    const ctx = this.layContext();
+    if (!ctx) return;
+    try {
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, now);
+      osc.frequency.exponentialRampToValueAtTime(38, now + 0.45);
+      gain.gain.setValueAtTime(0.32, now);
+      gain.gain.exponentialRampToValueAtTime(0.008, now + 0.48);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.48);
+    } catch {
+      // Fallback
+    }
+  }
+
   // Alias âm thanh chiến thắng
   public chienThang() {
     this.phatTiengChucMung();

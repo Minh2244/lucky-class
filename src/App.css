@@ -20,8 +20,17 @@
   width: 100%;
   max-width: 100%;
   flex: 1;
-  align-items: start;
+  align-items: stretch;
   box-sizing: border-box;
+}
+
+@media (min-width: 901px) {
+  /* Kéo dài khung danh sách học sinh bên trái bằng khít chiều cao khu vực trò chơi bên phải */
+  .student-sidebar-card {
+    height: 0 !important;
+    min-height: 100% !important;
+    max-height: none !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -38,6 +47,7 @@
   .student-sidebar-card {
     order: 2;
     height: auto !important;
+    min-height: auto !important;
     max-height: 380px !important;
   }
 }
